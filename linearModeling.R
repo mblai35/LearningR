@@ -1,8 +1,8 @@
-# statisticsFundamentals.R
+# linearModeling.R
 # R version 3.3.3 (2017-03-06)
 # Jan 26, 2017. Mallory B. Lai.
 # Reviewed by: TODO (Rachel) : Proofread for errors.
-# Introduction to the fundamentals of statistics. 
+# Introduction to linear modeling. 
 
 #-----------------------------------------------------------------------
 
