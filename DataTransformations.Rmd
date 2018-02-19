@@ -1,0 +1,88 @@
+---
+title: "Data Transformations: Linear Models"
+output: html_notebook
+---
+
+We're going to look at a non-linear exponential relationship of the form $y = ae^{bx}$. We can find a linear way of writing this equation by taking the $ln$ of both sides: 
+
+$$ln(y) = ln(ae^{bx})$$
+Due to log rules, 
+
+$$ln(y) = ln(a) + ln(e^{bx})$$
+$$ln(y) = ln(a) + bx$$
+
+We can rearrange the terms to look like the linear equation $y = mx + b$:
+
+$$\underbrace{ln(y)}_\text{y} = \underbrace{bx}_\text{mx} + \underbrace{ln(a)}_\text{b}$$
+
+Therefore, you should see a linear relationship when plotting $ln(y)$ and x. Let's look at this with a small data set in R. We'll plot the original data and the log transformed data side-by-side. 
+
+*Note: in R, log(x) is the natural log by default. To use log with another base, you must specify the base argument (log(x, base = 10)).*
+
+```{r}
+# Enter x values. 
+x <- c(0, 2, 4, 6)
+
+# Enter y values. 
+y <- c(1, 0.37, 0.14, 0.05)
+
+#### Plot x and y relationship. 
+# Split screen to show before and after transformation side-by-side. 
+par(mfrow = c(1, 2))
+# Plot the line first. With few data points, the relationship is a 
+# bit hard to see. 
+plot(x, y, type = 'l', lty = 2, col = 'grey', main = "Data")
+# Add points on top of line. 
+points(x, y, pch = 16)
+
+# Plot x with log-transformed y values. 
+plot(x, log(y), type = 'l', lty = 2, col = 'grey', main = "Transformed Data")
+points(x, log(y), pch = 16)
+```
+
+We can now fit a linear model to the transformed data in the same way we would for linear data. 
+
+```{r}
+# Fit linear model. 
+fit <- lm(log(y) ~ x)
+
+# Print summary of fit to investigate coefficients of linear model. 
+summary(fit)
+
+# Let's plot the line of best fit. 
+plot(x, log(y), pch = 16)
+abline(fit, lty = 2, col = 'grey')
+
+```
+
+We can see from the summary that our coefficient for the intercept is `r fit$coef[1]` and the slope is `r fit$coef[2]`. We now want to take these coefficients and convert our linear equation back into our exponential equation. 
+
+$$\underbrace{ln(y)}_\text{y} = \underbrace{bx}_\text{mx} + \underbrace{ln(a)}_\text{b}$$
+
+In this case, our slope is equivalent to the variable $b$ in our exponential equation. However, in our linear version of the exponential equation, the intercept is equivalent to $ln(a)$. Therefore, to find our $a$ variable, we must solve for $ln(a) =$ `r fit$coef[1]`. 
+
+```{r}
+# Solve for a. 
+exp(fit$coefficients[1])
+
+```
+
+Rounding $a$ to `r round(exp(fit$coef[1]))` and $b$ to `r round(fit$coef[2], digits = 2)`, we get $y = 1e^{-0.5x} \rightarrow y  = e^{-0.5x}$. Let's plot this line on top of our original data. 
+
+```{r}
+# Plot non-transformed data. 
+plot(x, y)
+curve(exp(-0.5*x), add = T, lty = 2, col = "#CD5C5C")
+```
+
+Ooh la la! Look at that curve! 
+
+
+
+
+
+
+
+
+
+
