@@ -1,0 +1,81 @@
+---
+title: "Binomial Probability Distribution"
+output: html_notebook
+---
+
+Assume your cat just had a litter of kittens. Con-cat-ulations! However, you suspect you will soon have five different paws gently tapping your face in the morning when you are sleeping. How many of these paws will be the left paw and how many will be the right? Assume the probability of having a left-handed kitten is 25% and a right-handed kitten is 75%. 
+
+![](/Users/mblai/Documents/kittens.jpg)
+<br />  
+
+We learned from the biased coin toss example that we can represent the probabilities of binomial variables (heads/tails, left-handed/right-handed, success/failure, presence/absence) with a *binomial probability distribution*. These two outcomes must be mutually exclusive. For example, you cannot have a coin land on its side. In our current example, we know this isn't entirely accurate since ambidexterity is possible. However, we're going to make a simplifying assumption and say that the probability of ambidexterity is low enough we don't need to account for it in the model. 
+
+Furthermore, the outcomes must be independent. This means the probability of seeing one outcome can't influence the probability of seeing another outcome. In our current example, it's possible that the mother's handedness could influence the probability of the kittens' handedness in ways that skew the probability of handedness in one direction or another. In this case, the handedness of the kittens would not be considered to be independent. However, for learning purposes, we'll assume the independence assumption has been met and the probability of a left-handed kitty has no influence on the next kitten's handedness. 
+
+To model the binomial distribution in R, we'll use the function *dbinom( )*. *dbinom( )* will give you the density of the binomial distribution at the value $x$ of the binomial distribution parameterized by *size* and *prob*. In other words, *dbinom(x = 1, size = 5, prob = .25)* translates to: "What's the probability that I see one left-handed kitten and four right-handed kittens where the probability of a left-handed kitten is 25%?" 
+
+Let's use *dbinom( )* to look at the probability of zero left-handed kittens in the litter of five kittens. 
+
+```{r}
+# Since we're interested in the probability of zero lefties, x will equal zero.
+# Because we have five kittens in the litter, size will equal five. 
+# Because P(left) = 0.25, we'll set the prob argument to 0.25.
+dbinom(x = 0, size = 5, prob = 0.25)
+```
+
+Now let's look at the probability of one left-handed kitten in the litter. 
+
+```{r}
+# Since we're interested in the probability of one left-handed kitten, x will equal one.
+dbinom(x = 1, size = 5, prob = 0.25)
+```
+
+To generate a distribution across all possible values for the number of left-handed kittens, we will first initialize a *left* vector. This *left* vector will represent the number of left-handed kittens in the litter where $left = \{0, 1, 2, 3, 4, 5\}$.
+
+```{r}
+
+# Initialize a left vector.
+left <- seq(from = 0, to = 5, by = 1)
+
+# Find probabilities for each value of x. 
+binProb <- dbinom(x = left, size = 5, prob = 0.25)
+
+# Plot these probabilities. 
+kittyColors <- c("#1E1C1B", "#94908B", "#FBC774", "#F39C12", "#BCA176", "#583B0E")
+barplot(binProb, col = kittyColors, border = kittyColors, names.arg = left, xlab = "Number of Lefties", ylab = "Probability", ylim = c(0, 1))
+
+
+```
+
+Notice how the probability distribution shows the probability of having zero left-handed kittens at `r dbinom(x = 0, size = 5, prob = .25) `. This is the same probability we calculated with *dbinom(x = 0, size = 5, prob = .25)*. Because the distribution accounts for all possible values of left-handedness in the litter, the probabilities of each possibility must sum to one. Let's confirm this is true with the *sum( )* function. 
+
+```{r}
+# Sum over all possible values of left-handedness in the litter, represented by our binProb vector. 
+sum(binProb)
+```
+
+Let's say you want to know the probability of seeing three left-handed kittens or less. You could add the probabilities of $left = 0, 1, 2, 3$ together, or you could use the *pbinom( )* function. *pbinom( )* will do this for you. Let's show the two different ways of doing this. 
+
+```{r}
+# Add probabilities of left together. 
+dbinom(x = 0, size = 5, prob = .25) + dbinom(x = 1, size = 5, prob = .25) + 
+  dbinom(x = 2, size = 5, prob = .25) + dbinom(x = 3, size = 5, prob = .25)
+
+# Use pbinom() to find the probability of seeing three left-handed kittens. 
+pbinom(q = 3, size = 5, prob = .25)
+```
+
+We can also use *pbinom( )* to look at the probability of *at least* three lefties. In this case, we can subtract the probability of seeing two or less from 1. For comparison, we'll also use *dbinom( )*.
+
+```{r}
+# Subtract the probability of two lefties or fewer 
+# from 1 to find the probability of three or more lefties. 
+1 - pbinom(q = 2, size = 5, prob = 0.25)
+
+# Add the probabilities of three, four, and five lefties together. 
+dbinom(x = 3, size = 5, prob = 0.25) + dbinom(x = 4, size = 5, prob = 0.25) + 
+  dbinom(x = 5, size = 5, prob = 0.25)
+```
+
+
+

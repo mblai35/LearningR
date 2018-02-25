@@ -75,7 +75,7 @@ plot(x, y)
 curve(exp(-0.5*x), add = T, lty = 2, col = "#CD5C5C")
 ```
 
-Ooh la la! Look at that curve! 
+Ooh la la! Look at that curve!
 
 
 
