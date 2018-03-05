@@ -1,0 +1,54 @@
+---
+title: "Plotting the Beta Distribution"
+output: html_notebook
+---
+
+The beta distribution is a continuous probability distribution defined by two shape parameters, $\alpha$ and $\beta$, with $\alpha$ and $\beta$ both being positive values. The beta distribution is defined on the interval [0, 1]. As such, it is excellent for modeling probabilities, proportions, and percentages. The beta distribution is quite flexible, taking on a variety of different shapes. 
+
+Let's look at plotting the beta distribution in R. We'll first create a sequence of values between 0 and 1. *dbeta( )* is then used to calculate the density of the beta distribution at every value of x. We'll first look at $Beta(\alpha = 1, \beta = 1)$, which is a uniform distribution. This means, there is an equal probability of every value of x.    
+
+```{r}
+# Create x vector for plotting. 
+x <- seq(from = 0, to = 1, length.out = 200)
+
+# Evaluate the density of the beta distribution for every x value. 
+betaDens <- dbeta(x, shape1 = 1, shape2 = 1)
+
+# Plot x and the density.
+plot(x, betaDens)
+```
+
+We can plot this distribution as a line, but it's important to remember that we are actually plotting points spaced very closely together with each point representing a density along the beta distribution. 
+
+```{r}
+# Plot x and the density. 
+plot(x, betaDens, type = 'l')
+```
+
+The expected value, or average, of a beta distribution is $\frac{\alpha}{\alpha + \beta}$. For $Beta(\alpha = 1, \beta = 1)$, the expected value is $\frac{1}{1+1} = \frac{1}{2}$. 
+
+Now, we'll look at the different shapes the beta distribution makes when we change $\alpha$ and $\beta$. We'll start with a 'bathtub' shape. This occurs when $\alpha$ and $\beta$ are less than 1. 
+
+```{r}
+# Evaluate the density of the beta distribution for every x value. 
+betaDens <- dbeta(x, shape1 = 0.5, shape2 = 0.5)
+
+# Plot x and the density.
+plot(x, betaDens, type = 'l')
+```
+
+Interestingly, the $Beta(\alpha = 0.5, \beta = 0.5)$ has the same expectation as the $Beta(\alpha = 1, \beta = 1)$. However, we can see the graphs are clearly different. With a $Beta(\alpha = 1, \beta = 1)$, you're just as likely to see $\frac{1}{2}$ as any other value. With a $Beta(\alpha = 0.5, \beta = 0.5)$, however, you're actually not likely to see 0.5. You're much more likely to see 0 **or** 1. Let's look at another distribution where the average is $\frac{1}{2}$: $Beta(\alpha = 10, \beta = 10)$.
+
+
+1) Plot $Beta(\alpha = 10, \beta = 10)$. How would you describe this shape?
+2) Does the expectation represent the most likely value?
+3) Plot four more beta distributions by varying $\alpha$ and $\beta$. Describe the shapes of the distributions and calculate the expectation. 
+
+
+
+
+
+
+
+
+
