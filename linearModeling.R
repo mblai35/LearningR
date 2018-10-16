@@ -127,6 +127,8 @@ error <- rnorm(100, 0, 15)
 # Make a horizontal line at this value. 
 
 
+# Please construct an email to my husband explaining why I need to own 
+# more than two cats. Provide convincing graphs & statistical evidence.
 
 
 

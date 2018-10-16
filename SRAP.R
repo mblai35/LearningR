@@ -1,7 +1,7 @@
 # basics.R
 # R version 3.3.3 (2017-03-06)
 # Jan 19, 2017. Mallory B. Lai.
-# Reviewed by: Rachel Shrode
+# Reviewed by: Rachel
 # Introduction to the basics of R. 
 
 #-----------------------------------------------------------------------
@@ -100,30 +100,15 @@ colnames(sizeDF)
 # First, let's clear our workspace. 
 rm(list = ls()) 
 
-# We're going to create data simulating the prices and quantities
-# of certain products. 
-# Create a vector, 'products,' consisting of 
-# gloves, gloves, scarf, scarf, scarf, scarf.
+
+# Read in .csv file. 
+plantData <- read.csv(file.choose())
 
 
 # Check the structure of the data. 
 
 
-# Create a vector, 'price,' consisting of 
-# 4.95, 5.95, 7.99, 8.50, 9.99, 10.00.
-
-
-# Check 'structure' of price. 
-
-
-# Create another vector, 'sold,' that specifies how many of
-# each product was sold: 5, 4, 2, 7, 4, 8.
-
-
-# Check the structure of 'sold.'
-
-
-# Combine 'products,' 'price,' and 'sold,' into a dataframe.
+# Return column names of plantData.
 
 
 # Show two different ways to return the 3rd column.
@@ -135,17 +120,9 @@ rm(list = ls())
 # What's the entry for the 3rd column, 2nd row?
 
 
-# Create a vector, 'tax,' that multiplies the price by 0.068.
+# Combine DayOfYear with RH_1 in a new dataframe, rh1.
 
-
-# Update the price vector such that it reflects the price with tax.
-
-
-# How much money was made from gloves?
-
-
-# How much money was made from scarves?
-
+rh1 <- data.frame(plantData$DayOfYear, plantData$RH_1)
 
 
 
